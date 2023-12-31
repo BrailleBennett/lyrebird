@@ -10,6 +10,7 @@ use tokio::process::Command;
 
 use crate::metadata::{format_metadata, AuxMetadataKey, QueueableKey};
 use crate::{CommandResult, Context, Error};
+use crate::ytdlp::ytdlp;
 
 use crate::vc::enter_vc;
 
@@ -37,9 +38,9 @@ impl HasClient for Client {
 }
 
 impl Queueable {
-    pub fn into_input(self, x: impl HasClient) -> Input {
+    pub async fn into_input(self, x: impl HasClient) -> Input {
         match self {
-            Queueable::Ytdl { arg } => YoutubeDl::new(x.client(), arg).into(),
+            Queueable::Ytdl { arg } => YoutubeDl::new_ytdl_like(ytdlp().await, x.client(), arg).into(),
         }
     }
 }
@@ -116,7 +117,7 @@ pub async fn playall(
     #[description = "url of playlist"] url: String,
 ) -> CommandResult {
     ctx.defer().await?;
-    let cmd = Command::new("yt-dlp")
+    let cmd = Command::new(ytdlp().await)
         .arg("--flat-playlist")
         .arg("-s")
         .arg("-j")
@@ -157,7 +158,7 @@ pub async fn playrand(
     #[description = "number of songs to play"] num: usize,
 ) -> CommandResult {
     ctx.defer().await?;
-    let cmd = Command::new("yt-dlp")
+    let cmd = Command::new(ytdlp().await)
         .arg("--flat-playlist")
         .arg("-s")
         .arg("-j")
@@ -200,7 +201,7 @@ pub async fn playrange(
     #[description = "range"] range: String,
 ) -> CommandResult {
     ctx.defer().await?;
-    let cmd = Command::new("yt-dlp")
+    let cmd = Command::new(ytdlp().await)
         .arg("--flat-playlist")
         .arg("-s")
         .arg("-j")
@@ -253,7 +254,7 @@ pub async fn enqueue(
     q: Queueable,
     handler: &mut songbird::Call,
 ) -> color_eyre::Result<AuxMetadata> {
-    let mut input = q.clone().into_input(client);
+    let mut input = q.clone().into_input(client).await;
     let metadata = input.aux_metadata().await?;
     let handle = handler.enqueue_input(input).await;
     let mut typemap = handle.typemap().write().await;

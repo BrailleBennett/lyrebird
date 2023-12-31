@@ -17,6 +17,7 @@ use tracing::debug;
 use crate::play::{play_multiple, Output, Queueable};
 use crate::vc::enter_vc;
 use crate::{CommandResult, Context};
+use crate::ytdlp::ytdlp;
 
 crate::commands!(search);
 
@@ -46,7 +47,7 @@ pub async fn search(
     let num = num.unwrap_or(5);
 
     ctx.defer().await?;
-    let cmd = Command::new("yt-dlp")
+    let cmd = Command::new(ytdlp().await)
         .arg("-j")
         .arg("-s")
         .arg("--flat-playlist")

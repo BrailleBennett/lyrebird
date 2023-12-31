@@ -34,6 +34,7 @@ mod search;
 mod track;
 mod vc;
 mod ws;
+mod ytdlp;
 
 macro_rules! commands {
     ($($i: ident),*$(,)?) => {
