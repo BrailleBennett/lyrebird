@@ -15,6 +15,9 @@ use tokio::fs;
 use tracing::warn;
 use tracing_subscriber::EnvFilter;
 
+use shuttle_secrets::SecretStore;
+use shuttle_serenity::ShuttleSerenity;
+
 type Error = color_eyre::Report;
 
 pub type CommandResult = std::result::Result<(), Error>;
@@ -48,14 +51,6 @@ pub(crate) use commands;
 
 pub struct Data {
     client: reqwest::Client,
-}
-
-fn main() {
-    tokio::runtime::Builder::new_multi_thread()
-        .enable_all()
-        .build()
-        .unwrap()
-        .block_on(main_inner());
 }
 
 fn all_commands() -> Vec<Command> {
@@ -132,13 +127,14 @@ async fn maybe_recover_inner(
     Ok(())
 }
 
-async fn main_inner() {
+#[shuttle_runtime::main]
+async fn main(#[shuttle_secrets::Secrets] secret_store: SecretStore) -> ShuttleSerenity {
     tracing_subscriber::fmt()
         .with_writer(std::io::stderr)
         .with_env_filter(EnvFilter::from_default_env())
         .init();
 
-    let bot_owner = env::var("BOT_OWNER_ID").expect("Please set BOT_OWNER_ID");
+    let bot_owner = secret_store.get("BOT_OWNER_ID").expect("Please set BOT_OWNER_ID");
     let bot_owner = UserId::from(
         NonZeroU64::new(bot_owner.parse().expect("bot owner id not correctly set"))
             .expect("bot owner ID should be non-zero"),
@@ -163,12 +159,12 @@ async fn main_inner() {
         })
         .build();
 
-    let token = env::var("DISCORD_TOKEN").expect("Expected a token in the environment");
+    let token = secret_store.get("DISCORD_TOKEN").expect("Expected a token in the environment");
     let intents = GatewayIntents::non_privileged() | GatewayIntents::MESSAGE_CONTENT;
     let client = ClientBuilder::new(token, intents)
         .register_songbird()
         .activity(ActivityData::watching("you"))
         .framework(framework)
-        .await;
-    client.unwrap().start().await.unwrap();
+        .await.unwrap();
+    Ok(client.into())
 }
