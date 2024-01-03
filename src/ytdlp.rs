@@ -5,7 +5,7 @@ use std::io::Write;
 use std::mem;
 use std::os::unix::fs::PermissionsExt;
 
-const YTDLP: &[u8] = include_bytes!(concat!(env!("OUT_DIR"), "/yt-dlp/dist/yt-dlp"));
+const YTDLP: &[u8] = include_bytes!(concat!(env!("OUT_DIR"), "/yt-dlp"));
 
 static FILE: OnceCell<String> = OnceCell::const_new();
 
@@ -20,4 +20,3 @@ pub async fn ytdlp() -> &'static str {
         path.display().to_string()
     }).await
 }
-
