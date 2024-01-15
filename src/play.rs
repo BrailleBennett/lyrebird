@@ -45,7 +45,7 @@ impl Queueable {
     }
 }
 
-#[poise::command(slash_command, category = "Enqueue")]
+#[poise::command(slash_command, category = "Enqueue", rename = "playurl")]
 /// Add a song to queue from the given URL.
 pub async fn play(
     ctx: Context<'_>,
@@ -54,7 +54,7 @@ pub async fn play(
     play_common(ctx, url, |_, url| Queueable::Ytdl { arg: url }, false).await
 }
 
-#[poise::command(slash_command, category = "Enqueue")]
+#[poise::command(slash_command, category = "Enqueue", rename = "play")]
 /// Play the first song from a given search term.
 pub async fn splay(
     ctx: Context<'_>,
