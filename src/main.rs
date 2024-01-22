@@ -163,7 +163,7 @@ async fn main(#[shuttle_secrets::Secrets] secret_store: SecretStore) -> ShuttleS
     let intents = GatewayIntents::non_privileged() | GatewayIntents::MESSAGE_CONTENT;
     let client = ClientBuilder::new(token, intents)
         .register_songbird()
-        .activity(ActivityData::watching("you"))
+        .activity(ActivityData::listening("/play"))
         .framework(framework)
         .await.unwrap();
     Ok(client.into())
