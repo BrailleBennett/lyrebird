@@ -75,4 +75,4 @@ optional argument. By default displays the first page.
 
 [adding bot to servers]: https://discordjs.guide/preparations/adding-your-bot-to-servers.html
 [rustup]: https://rustup.rs/
-[shuttle]: https://shuttle.rs
+[shuttle]: https://shuttle.rs/
