@@ -15,7 +15,7 @@ use tokio::fs;
 use tracing::warn;
 use tracing_subscriber::EnvFilter;
 
-use shuttle_secrets::SecretStore;
+use shuttle_runtime::SecretStore;
 use shuttle_serenity::ShuttleSerenity;
 
 type Error = color_eyre::Report;
