@@ -8,18 +8,19 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-tokio = { version = "1.23.0", features = ["full"] }
-tracing-subscriber = { version = "0.3.16", features = ["env-filter"] } 
-lazy_static = "1.4.0"
-tracing = "0.1.37"
-reqwest = { version = "0.11.14", default-features = false, features = ["rustls-tls"] }
-color-eyre = "0.6.2"
-serde_json = "1.0.94"
-serde = { version = "1.0.154", features = ["derive"] }
+tokio = { version = "1.39.2", features = ["full"] }
+tracing-subscriber = { version = "0.3.18", features = ["env-filter"] } 
+lazy_static = "1.5.0"
+tracing = "0.1.40"
+reqwest = { version = "0.11.27", default-features = false, features = ["rustls-tls"] }
+color-eyre = "0.6.3"
+serde_json = "1.0.122"
+serde = { version = "1.0.204", features = ["derive"] }
 rand = "0.8.5"
-tempfile = "3.4.0"
-shuttle-runtime = { version = "0.45.0", default-features = false }
-shuttle-serenity = "0.45.0"
+tempfile = "3.10.1"
+shuttle-runtime = { version = "0.47.0", default-features = false }
+shuttle-serenity = "0.47.0"
+toml = "0.8.19"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -29,17 +30,17 @@ git = "https://github.com/serenity-rs/poise"
 branch = "current"
 
 [dependencies.songbird]
-version = "0.4.0"
+version = "0.4.3"
 features = [ "builtin-queue" ]
 
 [dependencies.serenity]
-version = "0.12.0"
+version = "0.12.2"
 default-features = false
 features = ["client", "model", "cache", "voice"]
 
 [dependencies.symphonia]
-version = "0.5"
+version = "0.5.4"
 features = ["aac", "mp3", "isomp4", "alac"]
 
 [build-dependencies]
-reqwest = { version = "0.11.14", features = ["blocking", "rustls-tls"], default-features = false }
+reqwest = { version = "0.11.27", features = ["blocking", "rustls-tls"], default-features = false }

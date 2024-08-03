@@ -2,7 +2,7 @@ use std::env;
 use std::fs::write;
 use reqwest::blocking::get;
 
-const YTDLP_VERSION: &str = "2023.12.30";
+const YTDLP_VERSION: &str = "2024.08.01";
 
 fn main() {
     if env::var("CARGO_CFG_UNIX").is_err() {
