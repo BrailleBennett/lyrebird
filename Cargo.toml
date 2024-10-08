@@ -1,6 +1,3 @@
-[workspace]
-members = [ "runner" ]
-
 [package]
 name = "lyrebird"
 description = "this package uses youtube-dl and is a discord bot. How could this be bad?"
@@ -8,16 +5,16 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-tokio = { version = "1.23.0", features = ["full"] }
-tracing-subscriber = { version = "0.3.16", features = ["env-filter"] } 
-lazy_static = "1.4.0"
-tracing = "0.1.37"
-reqwest = { version = "0.11.14", default-features = false, features = ["rustls-tls"] }
-color-eyre = "0.6.2"
-serde_json = "1.0.94"
-serde = { version = "1.0.154", features = ["derive"] }
+tokio = { version = "1.40.0", features = ["full"] }
+tracing-subscriber = { version = "0.3.18", features = ["env-filter"] } 
+lazy_static = "1.5.0"
+tracing = "0.1.40"
+reqwest = { version = "0.11.27", default-features = false, features = ["rustls-tls"] }
+color-eyre = "0.6.3"
+serde_json = "1.0.128"
+serde = { version = "1.0.210", features = ["derive"] }
 rand = "0.8.5"
-tempfile = "3.4.0"
+tempfile = "3.13.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -27,14 +24,15 @@ git = "https://github.com/serenity-rs/poise"
 branch = "current"
 
 [dependencies.songbird]
-version = "0.4.0"
+git = "https://github.com/serenity-rs/songbird"
+branch = "current"
 features = [ "builtin-queue" ]
 
 [dependencies.serenity]
-version = "0.12.0"
+version = "0.12.2"
 default-features = false
 features = ["client", "model", "cache", "voice", "rustls_backend"]
 
 [dependencies.symphonia]
-version = "0.5"
+version = "0.5.4"
 features = ["aac", "mp3", "isomp4", "alac"]
