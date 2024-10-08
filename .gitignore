@@ -3,3 +3,5 @@ config.toml
 .direnv
 Secrets.toml
 
+.shuttle*
+Secrets*.toml
